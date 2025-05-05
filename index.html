@@ -2,79 +2,154 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rock Paper Scissors</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to right, #83a4d4, #b6fbff);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
         .frame {
-            width: 60%;
-            height: 600px;
-            margin: 50px 10%;
-            border: 3px solid black;
-            border-radius: 10px;
+            background-color: white;
+            border-radius: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 700px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-30px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .title {
             text-align: center;
-            font-size: 20px;
-            font-weight: bolder;
+            margin-bottom: 15px;
         }
 
-        h3 {
-            font-weight: lighter;
+        .title h1 {
+            font-size: 2rem;
+            color: #333;
         }
 
-        .imgframe {
-            width: 30%;
-            height: 200px;
-            border: 1px solid black;
-            margin: 0% 2%;
-
-        }
-
-        h4 {
-            margin: 0px;
-            text-align: center;
-            height: 30px;
-            background-color: black;
-            color: white;
-            margin: 0px;
-            box-sizing: border-box;
-            padding: 5px;
+        .title h3 {
+            font-weight: normal;
+            color: #666;
         }
 
         .flex {
             display: flex;
-            justify-content: center;
-            gap: 10%;
-
+            justify-content: space-between;
+            margin: 30px 0;
+            gap: 20px;
+            flex-wrap: wrap;
         }
 
-        h2 {
+        .imgframe {
+            flex: 1;
+            min-width: 150px;
             text-align: center;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid #444;
+            background-color: #f9f9f9;
         }
 
-        .img {
-            height: 50px;
-            width: 10%;
-            background-size: 100% 100%;
+        .imgframe h4 {
+            background-color: #444;
+            color: #fff;
+            padding: 8px;
         }
 
-        /* .stone{
-            background-image: url("https://cdn-icons-png.freepik.com/256/2121/2121094.png?ga=GA1.1.1848152914.1745893045&semt=ais_hybrid");
-        }
-        .paper{
-            background-image: url();
-        } */
         #you,
         #computer {
-            height: 170px;
-            background-color: antiquewhite;
-            background-size: 100% 100%;
+            height: 150px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            transition: background-image 0.3s ease-in-out;
+        }
+
+        .choose-title {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.4rem;
+            color: #444;
+        }
+
+        .button {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn-img {
+            width: 80px;
+            height: 80px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            overflow: hidden;
+            padding: 0;
+            background-color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s ease;
+        }
+
+        .btn-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: 100% 100%;
+            /* This ensures the image fills the button without distortion */
+            border-radius: 50%;
+            display: block;
+        }
+
+        .btn-img:hover {
+            transform: scale(1.1);
         }
 
         #res {
             text-align: center;
+            font-size: 1.5rem;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #222;
+        }
+
+        @media (max-width: 600px) {
+            .flex {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-img {
+                width: 60px;
+                height: 60px;
+            }
         }
     </style>
 </head>
@@ -82,8 +157,8 @@
 <body>
     <div class="frame">
         <div class="title">
-            <h1>Rock Paper Sisscors</h1>
-            <h3>Try Your Luck !</h3>
+            <h1>Rock Paper Scissors</h1>
+            <h3>Try Your Luck!</h3>
         </div>
         <div class="flex">
             <div class="imgframe">
@@ -95,71 +170,85 @@
                 <div id="computer"></div>
             </div>
         </div>
-        <div>
-            <h2>Choose One!</h2>
-        </div>
+        <div class="choose-title">Choose One!</div>
         <div class="button">
-            <button class="stone img " onclick="stonefunc()">Stone</button>
-            <button class="paper img" onclick="paperfunc()"> Paper</button>
-            <button class="sisscors img" onclick="scisscorsfunc()">Sisscors</button>
+            <button class="btn-img" onclick="stonefunc()">
+                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20210705223618/default.jpeg" alt="Rock" />
+            </button>
+            <button class="btn-img" onclick="paperfunc()">
+                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20210705223645/paper.jpeg" alt="Paper" />
+            </button>
+            <button class="btn-img" onclick="scisscorsfunc()">
+                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20210705223721/scissor.jpeg"
+                    alt="Scissors" />
+            </button>
         </div>
         <div>
             <p id="res"></p>
         </div>
     </div>
+
     <script>
-        let scisscors = "url('https://cdn-icons-png.freepik.com/256/2609/2609024.png?ga=GA1.1.1848152914.1745893045&semt=ais_hybrid')"
-        let stone = "url('https://cdn-icons-png.freepik.com/256/2121/2121094.png?ga=GA1.1.1848152914.1745893045&semt=ais_hybrid')"
-        let paper = "url('https://cdn-icons-png.freepik.com/256/8382/8382055.png?ga=GA1.1.1848152914.1745893045&semt=ais_hybrid')"
+        let stone = "url('https://media.geeksforgeeks.org/wp-content/uploads/20210705223618/default.jpeg')";
+        let paper = "url('https://media.geeksforgeeks.org/wp-content/uploads/20210705223645/paper.jpeg')";
+        let scisscors = "url('https://media.geeksforgeeks.org/wp-content/uploads/20210705223721/scissor.jpeg')";
         let userchoice;
         let compchoice;
-        let count = [stone, paper, scisscors]
-        let you = document.getElementById("you").style
-        let computer = document.getElementById("computer").style
+        const choices = ["st", "p", "sc"];
+        const images = {
+            st: "https://media.geeksforgeeks.org/wp-content/uploads/20210705223618/default.jpeg",
+            p: "https://media.geeksforgeeks.org/wp-content/uploads/20210705223645/paper.jpeg",
+            sc: "https://media.geeksforgeeks.org/wp-content/uploads/20210705223721/scissor.jpeg"
+            };
+
+        let you = document.getElementById("you").style;
+        let computer = document.getElementById("computer").style;
         let valuepic;
+
         function stonefunc() {
-            valuepic = Math.floor(Math.random() * 3)
+            valuepic = Math.floor(Math.random() * 3);
             you.backgroundImage = stone;
-            computer.backgroundImage = count[valuepic];
-            userchoice="st";
-            compchoice=count[valuepic].includes('2609024')?"sc":count[valuepic].includes('2121094')?"st":"p";
-            result()
+            computer.backgroundImage = `url(${images[choices[valuepic]]})`;;
+            userchoice = "st";
+            compchoice = choices[valuepic];
+            result();
         }
+
         function paperfunc() {
-            valuepic = Math.floor(Math.random() * 3)
+            valuepic = Math.floor(Math.random() * 3);
             you.backgroundImage = paper;
-            computer.backgroundImage = count[valuepic];
-            userchoice="p";
-            compchoice=count[valuepic].includes('2609024')?"sc":count[valuepic].includes('2121094')?"st":"p";
-            result()
+            computer.backgroundImage = `url(${images[choices[valuepic]]})`;;
+            userchoice = "p";
+            compchoice = choices[valuepic];
+            result();
         }
+
         function scisscorsfunc() {
-            valuepic = Math.floor(Math.random() * 3)
+            valuepic = Math.floor(Math.random() * 3);
             you.backgroundImage = scisscors;
-            computer.backgroundImage = count[valuepic];
-            userchoice="sc";
-            compchoice=count[valuepic].includes('2609024')?"sc":count[valuepic].includes('2121094')?"st":"p";
-            result()
+            computer.backgroundImage = `url(${images[choices[valuepic]]})`;;
+            userchoice = "sc";
+            compchoice = choices[valuepic];
+            result();
         }
 
-       
-        function result() {
-            if (userchoice == compchoice) {
-                document.getElementById("res").innerHTML = "Match Tie"
-            }
-            else if ((userchoice=='st') && (compchoice == 'sc')) {
-                document.getElementById("res").innerHTML = "You Wins"
-            }
-            else if ((userchoice == 'sc') && (compchoice == 'p')) {
-                document.getElementById("res").innerHTML = "You Wins"
-            }
-            else if ((userchoice== 'p') && (compchoice == 'st')) {
-                document.getElementById("res").innerHTML = "You Wins"
-            }
-            else {
-                document.getElementById("res").innerHTML = "Computer Wins"
-            }
+        // function getCompChoice(bg) {
+        //     return bg.includes('2609024') ? "sc" : bg.includes('2121094') ? "st" : "p";
+        // }
 
+        function result() {
+            let res = document.getElementById("res");
+            if (userchoice == compchoice) {
+                res.innerHTML = "Match Tie 🤝";
+            } else if (
+                (userchoice == "st" && compchoice == "sc") ||
+                (userchoice == "sc" && compchoice == "p") ||
+                (userchoice == "p" && compchoice == "st")
+            ) {
+                res.innerHTML = "You Win! 🎉";
+            } else {
+                res.innerHTML = "Computer Wins! 😢";
+            }
         }
     </script>
 </body>
